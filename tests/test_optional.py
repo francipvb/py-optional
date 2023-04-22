@@ -89,3 +89,13 @@ class TestValueOptional:
     def test_not_empty(self):
         optional = Optional.of(45)
         assert not optional.is_empty
+
+    def test_incompatible_equality(self):
+        opt_value = Optional.of(45)
+        assert opt_value != "test"
+
+
+def test_equal():
+    opt_value = Optional.of(45)
+    opt_empty: Optional[int] = Optional.empty()
+    assert opt_value != opt_empty

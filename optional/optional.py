@@ -19,7 +19,7 @@ class Optional(ABC, Generic[_T]):
 
     @property
     @abstractmethod
-    def value(self) -> _T:
+    def value(self) -> _T:  # pragma: nocover
         """Get the wrapped value.
 
         Raises:
@@ -32,7 +32,7 @@ class Optional(ABC, Generic[_T]):
 
     @property
     @abstractmethod
-    def has_value(self) -> bool:
+    def has_value(self) -> bool:  # pragma: nocover
         """Get wether this object has a value in it.
 
         Returns:
@@ -42,7 +42,7 @@ class Optional(ABC, Generic[_T]):
 
     @property
     @abstractmethod
-    def is_empty(self) -> bool:
+    def is_empty(self) -> bool:  # pragma: nocover
         """Get wether this instance is empty
 
         Returns:
@@ -51,7 +51,7 @@ class Optional(ABC, Generic[_T]):
         raise NotImplementedError()
 
     @abstractmethod
-    def or_else(self, value: _T) -> _T:
+    def or_else(self, value: _T) -> _T:  # pragma: nocover
         """Return a value
 
         Args:
@@ -82,7 +82,7 @@ class _Empty(Optional[_T], Generic[_T]):
     def has_value(self) -> bool:
         return False
 
-    def __eq__(self, __value: object) -> bool:
+    def __eq__(self, __value: Any) -> bool:
         if type(__value) != type(self):
             return NotImplemented
         return True
