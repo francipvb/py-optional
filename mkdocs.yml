@@ -1,0 +1,13 @@
+site_name: py-optional
+site_description: Optional value pattern for java.
+site_url: https://github.com/francipvb/py-optional
+
+theme:
+    name: "material"
+
+repo_name: francipvb/py-optional
+repo_url: https://github.com/francipvb/py-optional
+edit_uri: ""
+
+nav:
+    - Getting started: "index.md"
