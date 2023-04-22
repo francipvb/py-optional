@@ -159,7 +159,7 @@ class _Mapped(Optional[_TR], Generic[_T, _TR]):
 
     def __str__(self) -> str:
         if not self.has_value:
-            return str(self._mapper)
+            return str(self._mapped)
 
         return str(self.value)
 
@@ -182,3 +182,6 @@ class _Default(Optional[_T], Generic[_T]):
 
     def __repr__(self) -> str:
         return f"{self._mapped!r}.or_else({self._value!r})"
+
+    def __str__(self) -> str:
+        return str(self.value)

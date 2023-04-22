@@ -22,8 +22,9 @@ class TestEmptyOptional:
         assert not optional
 
     def test_or_else(self):
-        optional: Optional[int] = Optional.empty()
-        assert optional.or_else(43).value == 43
+        optional: Optional[int] = Optional.empty().or_else(44)
+        assert optional.value == 44
+        assert optional.has_value
 
     def test_empty_optional_raises_exception(self):
         optional: Optional[Any] = Optional.empty()
@@ -121,3 +122,23 @@ class TestMap:
         value_optional = Optional.of(45).map(mapper)
         assert not empty_optional.has_value
         assert value_optional.has_value
+
+    def test_repr(self):
+        mapper = Mock()
+        empty_optional: Optional[int] = Optional.empty().map(mapper)
+        assert repr(empty_optional) == f"Optional.empty().map({mapper!r})"
+
+    def test_str(self):
+        mapper = Mock(return_value=44)
+        empty_optional: Optional[int] = Optional.empty()
+        value_optional = Optional.of(33).map(mapper)
+        assert str(value_optional) == "44"
+        assert str(empty_optional.map(mapper)) == str(empty_optional)
+
+
+def test_str():
+    assert str(Optional.empty().or_else(33)) == str(33)
+
+
+def test_repr():
+    assert repr(Optional.empty().or_else(33)) == "Optional.empty().or_else(33)"
