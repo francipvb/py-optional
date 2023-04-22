@@ -1,4 +1,5 @@
 from typing import Any
+from unittest.mock import Mock
 
 from pytest import raises
 
@@ -22,7 +23,7 @@ class TestEmptyOptional:
 
     def test_or_else(self):
         optional: Optional[int] = Optional.empty()
-        assert optional.or_else(43) == 43
+        assert optional.or_else(43).value == 43
 
     def test_empty_optional_raises_exception(self):
         optional: Optional[Any] = Optional.empty()
@@ -62,7 +63,7 @@ class TestValueOptional:
 
     def test_or_else_return_value(self):
         optional = Optional.of(45)
-        assert optional.or_else(43) == 45
+        assert optional.or_else(43).value == 45
 
     def test_has_value(self):
         optional = Optional.of(5)
@@ -99,3 +100,24 @@ def test_equal():
     opt_value = Optional.of(45)
     opt_empty: Optional[int] = Optional.empty()
     assert opt_value != opt_empty
+
+
+class TestMap:
+    def test_map_empty(self):
+        empty_optional: Optional[int] = Optional.empty()
+        with raises(ValueNotProvidedError):
+            assert empty_optional.map(lambda x: x * 2).value
+
+    def test_map_value(self):
+        mapper = Mock(return_value=66)
+        value = Optional.of(33).map(mapper)
+        mapper.assert_not_called()
+        assert value.value == 66
+        mapper.assert_called_with(33)
+
+    def test_has_value(self):
+        mapper = Mock()
+        empty_optional: Optional[int] = Optional.empty().map(mapper)
+        value_optional = Optional.of(45).map(mapper)
+        assert not empty_optional.has_value
+        assert value_optional.has_value

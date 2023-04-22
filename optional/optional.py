@@ -5,11 +5,12 @@ This module has the implementations for the **Optional** object.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar, final
+from typing import Any, Callable, Generic, TypeVar, final
 
 from .exceptions import ValueNotProvidedError
 
 _T = TypeVar("_T")
+_TR = TypeVar("_TR")
 
 
 class Optional(ABC, Generic[_T]):
@@ -40,27 +41,34 @@ class Optional(ABC, Generic[_T]):
         """
         raise NotImplementedError()
 
+    @final
     @property
-    @abstractmethod
-    def is_empty(self) -> bool:  # pragma: nocover
+    def is_empty(self) -> bool:
         """Get wether this instance is empty
 
         Returns:
             bool: `True` if the value is not present, `False` otherwise
         """
-        raise NotImplementedError()
+        return not self.has_value
 
-    @abstractmethod
-    def or_else(self, value: _T) -> _T:  # pragma: nocover
-        """Return a value
+    @final
+    def or_else(self, value: _T) -> Optional[_T]:
+        """Return an optional value wrapping this.
+
+        If this optional has a value, the value is returned. Otherwise, the supplied
+        value is returned from the returned object's value propertyl.
 
         Args:
             value (_T): The value to retrieve if the instance is empty
 
         Returns:
-            _T: The value
+            Optional[_T]: The `Optional` object wrapping this
         """
-        raise NotImplementedError()
+
+        return _Default(value, self)
+
+    def map(self, mapper: Callable[[_T], _TR]) -> Optional[_TR]:
+        return _Mapped(self, mapper)
 
     @staticmethod
     def of(value: _T) -> Optional[_T]:
@@ -69,6 +77,20 @@ class Optional(ABC, Generic[_T]):
     @staticmethod
     def empty() -> Optional[Any]:
         return _Empty()
+
+    def __eq__(self, __value: Any) -> bool:
+        if type(__value) != type(self):
+            return NotImplemented
+
+        if self.has_value and __value.has_value:
+            # Delegate comparison to value implementations itself.
+            return self.value == __value.value
+
+        # Compare the `has_value` property:
+        return self.has_value == __value.has_value
+
+    def __bool__(self) -> bool:
+        return self.has_value
 
 
 class _Empty(Optional[_T], Generic[_T]):
@@ -82,26 +104,11 @@ class _Empty(Optional[_T], Generic[_T]):
     def has_value(self) -> bool:
         return False
 
-    def __eq__(self, __value: Any) -> bool:
-        if type(__value) != type(self):
-            return NotImplemented
-        return True
-
-    def or_else(self, value: _T) -> _T:
-        return value
-
-    def __bool__(self) -> bool:
-        return False
-
     def __repr__(self) -> str:
         return "Optional.empty()"
 
     def __str__(self) -> str:
         return "empty"
-
-    @property
-    def is_empty(self) -> bool:
-        return True
 
 
 class _Value(Optional[_T], Generic[_T]):
@@ -119,22 +126,59 @@ class _Value(Optional[_T], Generic[_T]):
     def has_value(self) -> bool:
         return True
 
-    def or_else(self, value: _T) -> _T:
-        return self.value
-
-    def __eq__(self, __value: object) -> bool:
-        if not isinstance(__value, type(self)):
-            return NotImplemented
-
-        # Delegate equality check to the instance values:
-        return self.value == __value.value
-
     def __repr__(self) -> str:
         return f"Optional[{type(self.value).__qualname__}].of({self.value!r})"
 
     def __str__(self) -> str:
         return str(self.value)
 
+
+class _Mapped(Optional[_TR], Generic[_T, _TR]):
+    __slots__ = ("_mapped", "_mapper", "_value", "_value_set")
+
+    def __init__(self, mapped: Optional[_T], mapper: Callable[[_T], _TR]) -> None:
+        self._mapper = mapper
+        self._mapped = mapped
+        self._value_set = False
+        self._value = None
+
     @property
-    def is_empty(self) -> bool:
-        return False
+    def has_value(self) -> bool:
+        return self._mapped.has_value
+
+    @property
+    def value(self) -> _TR:
+        if not self._value_set:
+            self._value = self._mapper(self._mapped.value)
+            self._value_set = True
+
+        return self._value  # type: ignore
+
+    def __repr__(self) -> str:
+        return f"{self._mapped!r}.map({self._mapper!r})"
+
+    def __str__(self) -> str:
+        if not self.has_value:
+            return str(self._mapper)
+
+        return str(self.value)
+
+
+class _Default(Optional[_T], Generic[_T]):
+    def __init__(self, value: _T, mapped: Optional[_T]) -> None:
+        self._value = value
+        self._mapped = mapped
+
+    @property
+    def value(self) -> _T:
+        if self._mapped.has_value:
+            return self._mapped.value
+
+        return self._value
+
+    @property
+    def has_value(self) -> bool:
+        return True
+
+    def __repr__(self) -> str:
+        return f"{self._mapped!r}.or_else({self._value!r})"
