@@ -5,7 +5,7 @@ This module has the implementations for the **Optional** object.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Generic, TypeVar, final
+from typing import Any, Awaitable, Callable, Generic, TypeVar, final, Union
 
 from .exceptions import ValueNotProvidedError
 
@@ -107,6 +107,42 @@ class Optional(ABC, Generic[_T]):
             A new [Optional][optional.Optional] object
         """
         return _Mapped(self, mapper)
+
+    @final
+    def apply(
+        self,
+        func: Callable[[_T], None],
+        *,
+        if_empty: Union[Callable[[], None], None] = None,
+    ) -> None:
+        """Call a function if the value is present.
+
+        Args:
+            func: The code to call if the value is present
+            if_empty: The function to be called if the value is not present.
+        """
+        if self.has_value:
+            func(self.value)
+        elif if_empty is not None:
+            if_empty()
+
+    @final
+    async def apply_async(
+        self,
+        func: Callable[[_T], Awaitable[None]],
+        *,
+        if_empty: Union[Callable[[], Awaitable[None]], None] = None,
+    ) -> None:
+        """Call an async function if the value is present.
+
+        Args:
+            func: The async function to call
+            if_empty: The function to be called if the value is not present.
+        """
+        if self.has_value:
+            await func(self.value)
+        elif if_empty is not None:
+            await if_empty()
 
     @staticmethod
     def of(value: _T) -> Optional[_T]:

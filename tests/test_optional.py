@@ -1,7 +1,7 @@
 from typing import Any
-from unittest.mock import Mock
+from unittest.mock import AsyncMock, Mock
 
-from pytest import raises
+from pytest import mark, raises
 
 from optional import Optional, ValueNotProvidedError
 
@@ -142,3 +142,41 @@ def test_str():
 
 def test_repr():
     assert repr(Optional.empty().or_else(33)) == "Optional.empty().or_else(33)"
+
+
+class TestApply:
+    def test_apply_empty(self):
+        empty_value: Optional[int] = Optional.empty()
+        func = Mock()
+        else_func = Mock()
+        empty_value.apply(func, if_empty=else_func)
+        func.assert_not_called()
+        else_func.assert_called_once()
+
+    def test_apply(self):
+        empty_value: Optional[int] = Optional.of(45)
+        func = Mock()
+        else_func = Mock()
+        empty_value.apply(func, if_empty=else_func)
+        func.assert_called_once_with(45)
+        else_func.assert_not_called
+
+    @mark.anyio()
+    async def test_apply_async_empty(self):
+        empty_value: Optional[int] = Optional.empty()
+        func = AsyncMock()
+        else_func = AsyncMock()
+        await empty_value.apply_async(func, if_empty=else_func)
+        func.assert_not_called()
+        else_func.assert_called_once()
+        else_func.assert_awaited()
+
+    @mark.anyio()
+    async def test_apply_async(self):
+        empty_value: Optional[int] = Optional.of(45)
+        func = AsyncMock()
+        else_func = AsyncMock()
+        await empty_value.apply_async(func, if_empty=else_func)
+        func.assert_called_once_with(45)
+        func.assert_awaited()
+        else_func.assert_not_called
