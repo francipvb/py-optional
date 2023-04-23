@@ -24,7 +24,7 @@ mkdocs-material = "^9.1.4"
 markdown-include = "^0.8.1"
 mkdocstrings = {extras = ["python"], version = "^0.21.2"}
 anyio = "^3.6.2"
-trio = "^0.22.0"
+uvloop = "^0.17.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
