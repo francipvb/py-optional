@@ -11,3 +11,8 @@ edit_uri: ""
 
 nav:
     - Getting started: "index.md"
+    - api.md
+
+plugins:
+    - search
+    - mkdocstrings
