@@ -11,9 +11,14 @@ edit_uri: ""
 
 nav:
     - index.md
+    - MOTIVATION.md
+    - USAGE.md
     - api.md
     - CHANGELOG.md
 
 plugins:
     - search
     - mkdocstrings
+
+watch:
+    - "optional"
