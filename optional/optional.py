@@ -5,7 +5,7 @@ This module has the implementations for the **Optional** object.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Generic, TypeVar, final
+from typing import Any, Awaitable, Callable, Generic, TypeVar, final, Union
 
 from .exceptions import ValueNotProvidedError
 
@@ -14,7 +14,14 @@ _TR = TypeVar("_TR")
 
 
 class Optional(ABC, Generic[_T]):
-    """An optional value wrapper."""
+    """An optional value wrapper.
+
+    An **Optional** object is never constructed directly. Insthead, there are methods to
+    build them.
+
+    See the [of][optional.Optional.of] and
+    [empty][optional.Optional.empty] methods.
+    """
 
     __slots__ = ()
 
@@ -36,8 +43,11 @@ class Optional(ABC, Generic[_T]):
     def has_value(self) -> bool:  # pragma: nocover
         """Get wether this object has a value in it.
 
+        If the value is not present, an exception is raised.
+
         Returns:
-            bool: Wether the value is present or not
+            True: If the value is present
+            False: If the **Optional** object is empty
         """
         raise NotImplementedError()
 
@@ -45,6 +55,9 @@ class Optional(ABC, Generic[_T]):
     @property
     def is_empty(self) -> bool:
         """Get wether this instance is empty
+
+        This just returns the opposite of
+        [has_value][optional.optional.Optional.has_value].
 
         Returns:
             bool: `True` if the value is not present, `False` otherwise
@@ -56,26 +69,100 @@ class Optional(ABC, Generic[_T]):
         """Return an optional value wrapping this.
 
         If this optional has a value, the value is returned. Otherwise, the supplied
-        value is returned from the returned object's value propertyl.
+        value is returned from the returned object's value property.
 
         Args:
-            value (_T): The value to retrieve if the instance is empty
+            value: The value to retrieve if the instance is empty
 
         Returns:
-            Optional[_T]: The `Optional` object wrapping this
+            The [Optional][optional.optional.Optional] object wrapping this
         """
 
         return _Default(value, self)
 
+    @final
     def map(self, mapper: Callable[[_T], _TR]) -> Optional[_TR]:
+        """Build a value mapper.
+
+        The returned value is another [Optional][optional.Optional] implementation
+        that runs the _mapper_ function.
+
+        The provided callable is run once for every instance and after the value has
+        been mapped it is cached on the object.
+
+        For example:
+
+        ```pycon
+        >>> from optional import Optional
+        >>> opt=Optional.of(33).map(lambda x: x*2)
+        >>> opt.value
+        66
+        >>>
+        ```
+
+        Args:
+            mapper: The mapper function
+
+        Returns:
+            A new [Optional][optional.Optional] object
+        """
         return _Mapped(self, mapper)
+
+    @final
+    def apply(
+        self,
+        func: Callable[[_T], None],
+        *,
+        if_empty: Union[Callable[[], None], None] = None,
+    ) -> None:
+        """Call a function if the value is present.
+
+        Args:
+            func: The code to call if the value is present
+            if_empty: The function to be called if the value is not present.
+        """
+        if self.has_value:
+            func(self.value)
+        elif if_empty is not None:
+            if_empty()
+
+    @final
+    async def apply_async(
+        self,
+        func: Callable[[_T], Awaitable[None]],
+        *,
+        if_empty: Union[Callable[[], Awaitable[None]], None] = None,
+    ) -> None:
+        """Call an async function if the value is present.
+
+        Args:
+            func: The async function to call
+            if_empty: The function to be called if the value is not present.
+        """
+        if self.has_value:
+            await func(self.value)
+        elif if_empty is not None:
+            await if_empty()
 
     @staticmethod
     def of(value: _T) -> Optional[_T]:
+        """Build an [Optional][optional.Optional] object.
+
+        Args:
+            value: The value to wrap
+
+        Returns:
+            The [Optional] wrapper.
+        """
         return _Value(value)
 
     @staticmethod
     def empty() -> Optional[Any]:
+        """Build an empty [Optional][optional.optional.Optional] object.
+
+        Returns:
+            An empty optional instance
+        """
         return _Empty()
 
     def __eq__(self, __value: Any) -> bool:

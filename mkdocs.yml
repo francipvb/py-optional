@@ -10,4 +10,15 @@ repo_url: https://github.com/francipvb/py-optional
 edit_uri: ""
 
 nav:
-    - Getting started: "index.md"
+    - index.md
+    - MOTIVATION.md
+    - USAGE.md
+    - api.md
+    - CHANGELOG.md
+
+plugins:
+    - search
+    - mkdocstrings
+
+watch:
+    - "optional"

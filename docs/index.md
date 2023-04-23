@@ -9,6 +9,7 @@ This is a python implementation for optional values. Don't confuse them with `No
 - Supports setting values as empty.
 - Implements checks for value presence or absence.
 - Factory methods to create empty and valued objects are provided.
+- Full typing support.
 
 ## Installation
 
@@ -21,7 +22,6 @@ pip install py-optional
 Or you can clone `py-optional` and get started locally
 
 ```bash
-
 # ensure you have Poetry installed
 pip install --user poetry
 
@@ -54,9 +54,3 @@ print(sum_numbers(a=O.of(3), b=O.of(5))) # -> 8
 Only **Python 3.8+** is supported as required by the black, pydantic packages
 
 When you make a release on GitHub, the publish workflow will run and deploy to PyPi! 🚀🎉😎
-
-## Contributing Guide
-
-Welcome! 😊👋
-
-> Please see the [Contributing Guide](CONTRIBUTING.md).
