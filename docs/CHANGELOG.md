@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0a2] - 2023-04-24
+
+Hotfix release, fixing publish workflow.
+
 ## [1.0a1] - 2023-04-24
 
 This is the initial release.
@@ -22,3 +26,4 @@ This is the initial release.
 
 [Unreleased]: https://github.com/francipvb/py-optional/compare/v0.0.0...HEAD
 [1.0a1]: https://github.com/francipvb/py-optional/releases/tag/v1.0a1
+[1.0a2]: https://github.com/francipvb/py-optional/releases/tag/v1.0a2
