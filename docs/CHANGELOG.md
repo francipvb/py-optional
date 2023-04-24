@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.1] - 2023-03-26
+## [1.0a1] - 2023-04-24
+
+This is the initial release.
 
 ### Features:
 
@@ -19,4 +21,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added basic documentation.
 
 [Unreleased]: https://github.com/francipvb/py-optional/compare/v0.0.0...HEAD
-[0.0.1]: https://github.com/francipvb/py-optional/releases/tag/v0.0.
+[1.0a1]: https://github.com/francipvb/py-optional/releases/tag/v1.0a1
