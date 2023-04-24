@@ -30,4 +30,4 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@v1.8.5
       - name: Publish documentation
         run: |
-          poetry run mkdocs deploy
+          poetry run mkdocs gh-deploy
