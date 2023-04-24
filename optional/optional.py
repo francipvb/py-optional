@@ -5,7 +5,7 @@ This module has the implementations for the **Optional** object.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Awaitable, Callable, Generic, TypeVar, final, Union
+from typing import Any, Awaitable, Callable, Generic, TypeVar, Union, final
 
 from .exceptions import ValueNotProvidedError
 

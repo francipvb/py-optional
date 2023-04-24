@@ -5,4 +5,4 @@ set -x
 
 mypy optional --disallow-untyped-defs
 black optional tests --check
-isort --multi-line=3 --trailing-comma --force-grid-wrap=0 --combine-as --line-width 88 --check-only --thirdparty optional optional tests
+isort --check-only optional tests

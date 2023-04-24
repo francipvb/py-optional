@@ -1,9 +1,8 @@
 from typing import Any
 from unittest.mock import AsyncMock, Mock
 
-from pytest import mark, raises
-
 from optional import Optional, ValueNotProvidedError
+from pytest import mark, raises
 
 
 class TestEmptyOptional:
