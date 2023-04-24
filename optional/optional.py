@@ -227,7 +227,7 @@ class _Mapped(Optional[_TR], Generic[_T, _TR]):
         self._mapper = mapper
         self._mapped = mapped
         self._value_set = False
-        self._value = None
+        self._value: Any = None
 
     @property
     def has_value(self) -> bool:
