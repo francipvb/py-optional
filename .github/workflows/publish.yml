@@ -28,6 +28,23 @@ jobs:
       - name: Build package
         run: poetry run bash scripts/build.sh
       - uses: pypa/gh-action-pypi-publish@v1.8.5
-      - name: Publish documentation
+  publish-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: poetry
+      - name: Install Dependencies
+        run: poetry install
+
+      - name: Build documentation site
         run: |
           poetry run mkdocs gh-deploy
