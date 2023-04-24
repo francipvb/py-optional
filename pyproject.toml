@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "py-optional"
-version = "0.0.4"
+version = "0.0.0"
 description = "Tools to convert SQLAlchemy models to Pydantic models"
 authors = ["Francisco Del Roio <francipvb@hotmail.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{ include = "optional" }]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
