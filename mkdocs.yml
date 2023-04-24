@@ -1,10 +1,14 @@
+strict: true
 site_name: py-optional
-site_description: Optional value pattern for java.
-site_url: https://github.com/francipvb/py-optional
+site_description: Optional value pattern for python.
+site_url: https://francipvb.github.io/py-optional
 
 theme:
     name: "material"
 
+    features:
+        - content.code.select
+        - content.code.copy
 repo_name: francipvb/py-optional
 repo_url: https://github.com/francipvb/py-optional
 edit_uri: ""
@@ -19,6 +23,20 @@ nav:
 plugins:
     - search
     - mkdocstrings
+    - autorefs
 
 watch:
     - "optional"
+
+site_author: "Francisco Del Roio"
+remote_branch: gh-pages
+remote_name: origin
+
+markdown_extensions:
+    - pymdownx.highlight:
+          anchor_linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
