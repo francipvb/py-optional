@@ -6,7 +6,7 @@ If you use the typing support for python, you know about the `Optional` python t
 
 To avoid this issue, you can import the class with an alias for disambiguation:
 
-```python
+```{py title="Example importing"}
 from optional import Optional as O
 
 ```
