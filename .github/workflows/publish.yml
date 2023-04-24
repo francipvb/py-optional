@@ -8,6 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.python.org/p/py-optional
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - name: Install poetry
@@ -20,10 +25,9 @@ jobs:
           cache: poetry
       - name: Install Dependencies
         run: poetry install
-      - name: Publish
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      - name: Build package
+        run: poetry build
+      - uses: pypa/gh-action-pypi-publish@v1.8.5
+      - name: Publish documentation
         run: |
-          poetry config pypi-token.pypi $PYPI_TOKEN
-          bash scripts/publish.sh
           poetry run mkdocs deploy
