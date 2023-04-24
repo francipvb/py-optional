@@ -1,7 +1,7 @@
 # py-optional
 
 <p align="center">
-    <em>A summary phrase to catch attention!</em>
+    <em>Optional value implementation for python.</em>
 </p>
 
 <p align="center">
@@ -24,12 +24,9 @@
     <img src="https://img.shields.io/pypi/pyversions/py-optional.svg" alt="Python Versions">
 </a>
 
-## The Basic Idea
+## Getting started
 
-This is a template module collecting many utilities I have liked from other projects, to serve as a personal reference.
-
-- [https://github.com/tiangolo/pydantic-sqlalchemy/](https://github.com/tiangolo/pydantic-sqlalchemy/)
-- [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
+See [Documentation](docs/index.md) for details.
 
 ## Features
 
@@ -73,7 +70,7 @@ import py-optional
 # do stuff
 ```
 
-Only **Python 3.6+** is supported as required by the black, pydantic packages
+Only **Python 3.8+** is supported as required by the black, pydantic packages
 
 ## Publishing to Pypi
 
@@ -81,7 +78,7 @@ Only **Python 3.6+** is supported as required by the black, pydantic packages
 
 Note that it is recommended to use [API tokens](https://pypi.org/help/#apitoken) when uploading packages to PyPI.
 
->Once you have created a new token, you can tell Poetry to use it:
+> Once you have created a new token, you can tell Poetry to use it:
 
 <https://python-poetry.org/docs/repositories/#configuring-credentials>
 
