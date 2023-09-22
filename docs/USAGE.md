@@ -82,3 +82,17 @@ To prevent this, you can call the `or_else` method on the new **Optional** objec
 ## The `apply` and `apply_async` methods
 
 These methods have a similar purpose. The only difference is that the `apply_async` method should be called when an async operation should be done for the **Optional** value.
+
+## The **optionalproperty** decorator
+
+This decorator returns a **OptionalProperty** object.
+
+The **OptionalProperty** decorator is a
+descriptor emulating a property with a default
+value. If a value is not set, a callable is
+executed to provide the default value.
+
+The descriptor also has a method to check wether the value is set in a specific object
+instance.
+
+See the optional property [decorator][optional.optionalproperty] and [class][optional.OptionalProperty] documentation for details.

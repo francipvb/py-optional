@@ -24,9 +24,7 @@
         "venv",
         "virtualenvs"
     ],
-    "python.testing.pytestArgs": [
-        "."
-    ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "python.analysis.diagnosticMode": "workspace"
 }

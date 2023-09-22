@@ -35,3 +35,7 @@ build-backend = "poetry.masonry.api"
 [tool.isort]
 known_third_party = ["optional"]
 profile = "black"
+
+
+[tool.pyright]
+typeCheckingMode = "strict"
