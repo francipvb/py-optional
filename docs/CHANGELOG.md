@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0a6] - 2023-04-24
+
+- Changed build documentation step display name.
+
 ## [1.0a5] - 2023-04-24
 
 - Changed publish workflow to use gh-deploy command.
