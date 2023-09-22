@@ -325,6 +325,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-optionalproperty-decorator" class="md-nav__link">
+    The optionalproperty decorator
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -431,6 +438,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-optionalproperty-decorator" class="md-nav__link">
+    The optionalproperty decorator
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -503,6 +517,15 @@
 <p>To prevent this, you can call the <code>or_else</code> method on the new <strong>Optional</strong> object.</p>
 <h2 id="the-apply-and-apply_async-methods">The <code>apply</code> and <code>apply_async</code> methods</h2>
 <p>These methods have a similar purpose. The only difference is that the <code>apply_async</code> method should be called when an async operation should be done for the <strong>Optional</strong> value.</p>
+<h2 id="the-optionalproperty-decorator">The <strong>optionalproperty</strong> decorator</h2>
+<p>This decorator returns a <strong>OptionalProperty</strong> object.</p>
+<p>The <strong>OptionalProperty</strong> decorator is a
+descriptor emulating a property with a default
+value. If a value is not set, a callable is
+executed to provide the default value.</p>
+<p>The descriptor also has a method to check wether the value is set in a specific object
+instance.</p>
+<p>See the optional property <a class="autorefs autorefs-internal" href="../api/#optional.optionalproperty">decorator</a> and <a class="autorefs autorefs-internal" href="../api/#optional.OptionalProperty">class</a> documentation for details.</p>
 
 
 

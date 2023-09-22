@@ -382,8 +382,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#optional.OptionalProperty" class="md-nav__link">
+    OptionalProperty
+  </a>
+  
+    <nav class="md-nav" aria-label="OptionalProperty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional.optional_property.OptionalProperty.is_present" class="md-nav__link">
+    is_present()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#optional.ValueNotProvidedError" class="md-nav__link">
     ValueNotProvidedError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional.optionalproperty" class="md-nav__link">
+    optionalproperty()
   </a>
   
 </li>
@@ -521,8 +548,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#optional.OptionalProperty" class="md-nav__link">
+    OptionalProperty
+  </a>
+  
+    <nav class="md-nav" aria-label="OptionalProperty">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional.optional_property.OptionalProperty.is_present" class="md-nav__link">
+    is_present()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#optional.ValueNotProvidedError" class="md-nav__link">
     ValueNotProvidedError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional.optionalproperty" class="md-nav__link">
+    optionalproperty()
   </a>
   
 </li>
@@ -1101,6 +1155,137 @@ value is returned from the returned object's value property.</p>
 
 
 
+<h2 id="optional.OptionalProperty" class="doc doc-heading">
+        <code>OptionalProperty</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Generic">Generic</span>[<span title="optional.optional_property._V">_V</span>]</code></p>
+
+  
+      <p>An optional property.</p>
+<p>This construct holds a value only if was set. Otherwise, a callable object supplies
+the default value.</p>
+
+<details class="example-usage">
+  <summary>Example usage</summary>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&gt;&gt;&gt; from optional import OptionalProperty
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&gt;&gt;&gt; class Foo:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>...     @OptionalProperty
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>...     def my_property(self):
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>...         return &quot;default&quot;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>&gt;&gt;&gt; obj=Foo()
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>&gt;&gt;&gt; # Get the default value
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>&gt;&gt;&gt; obj.my_property
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>&#39;default&#39;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>&gt;&gt;&gt; # Check wether the value is present
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>&gt;&gt;&gt; Foo.my_property.is_present(obj)
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>False
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>&gt;&gt;&gt; # Set another value and retrieve it
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>&gt;&gt;&gt; obj.my_property=&quot;other&quot;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>&gt;&gt;&gt; obj.my_property
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>&#39;other&#39;
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>&gt;&gt;&gt; Foo.my_property.is_present(obj)
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>True
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>&gt;&gt;&gt; # Just use python syntax to restore to the default value
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>&gt;&gt;&gt; del obj.my_property
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>&gt;&gt;&gt; obj.my_property
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>&#39;default&#39;
+</span></code></pre></div>
+</details>      <p>The type parameter <code>_V</code> if the type accepted and returned by the property.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="optional.optional_property.OptionalProperty.is_present" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_present</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check wether the property was set.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>obj</code></td>
+          <td>
+                <code>object</code>
+          </td>
+          <td><p>The object to check</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p><code>True</code> if the property was set. Otherwise returns <code>False</code></p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="optional.ValueNotProvidedError" class="doc doc-heading">
         <code>ValueNotProvidedError</code>
 
@@ -1121,6 +1306,66 @@ value is returned from the returned object's value property.</p>
 
 </div>
 
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="optional.optionalproperty" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">optionalproperty</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Alias for <a class="autorefs autorefs-internal" href="#optional.OptionalProperty">OptionalProperty</a>.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code><span title="collections.abc.Callable">Callable</span>[[<span title="typing.Any">Any</span>], <span title="optional.optional_property._V">_V</span>]</code>
+          </td>
+          <td><p>The default value supplier.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="optional.optional_property.OptionalProperty" href="#optional.OptionalProperty">OptionalProperty</a>[<span title="optional.optional_property._V">_V</span>]</code>
+          </td>
+          <td><p>An optional property construct.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
 
 
 
