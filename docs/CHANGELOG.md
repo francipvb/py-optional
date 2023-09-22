@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0a4] - 2023-04-24
+
+- Fixed publish workflow to publish on tags insthead of github releases.
+
 ## [1.0a3] - 2023-04-24
 
-### Fixes:
+### Fixes
 
 - Fixed publishing workflow to set the version before building the package.
 
@@ -21,12 +25,12 @@ Hotfix release, fixing publish workflow.
 
 This is the initial release.
 
-### Features:
+### Features
 
 - Added **Optional** object.
 - Added tests to reach 100% coverage.
 
-### Documentation:
+### Documentation
 
 - Added basic documentation.
 
