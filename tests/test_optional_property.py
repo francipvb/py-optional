@@ -1,3 +1,6 @@
+from unittest.mock import NonCallableMock
+
+import pytest
 from optional import OptionalProperty, optionalproperty
 
 _DEFAULT_NUM = 45
@@ -37,3 +40,9 @@ def test_property_delete():
     obj.number = 33
     del obj.number
     assert not _TestClass.number.is_present(obj)
+
+
+def test_not_callable():
+    mock = NonCallableMock()
+    with pytest.raises(TypeError):
+        OptionalProperty(mock)
