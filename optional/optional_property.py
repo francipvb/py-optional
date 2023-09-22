@@ -10,14 +10,55 @@ _V = TypeVar("_V")
 
 
 class OptionalProperty(Generic[_V]):
+    """An optional property.
+
+    This construct holds a value only if was set. Otherwise, a callable object supplies
+    the default value.
+
+    Example usage:
+        ```python-interactive
+
+        >>> from optional import OptionalProperty
+
+        >>> class Foo:
+        ...     @OptionalProperty
+        ...     def my_property(self):
+        ...         return "default"
+
+        >>> obj=Foo()
+        >>> # Get the default value
+        >>> obj.my_property
+        'default'
+        >>> # Check wether the value is present
+        >>> Foo.my_property.is_present(obj)
+        False
+        >>> # Set another value and retrieve it
+        >>> obj.my_property="other"
+        >>> obj.my_property
+        'other'
+        >>> Foo.my_property.is_present(obj)
+        True
+        >>> # Just use python syntax to restore to the default value
+        >>> del obj.my_property
+        >>> obj.my_property
+        'default'
+
+        ```
+
+    The type parameter `_V` if the type accepted and returned by the property.
+
+    """
+
     def __init__(
         self,
         fget: Callable[[Any], _V],
-        doc: str | None = None,
     ) -> None:
         super().__init__()
+        if not callable(fget):
+            error_msg = f"{fget!r} is not callable."
+            raise TypeError(error_msg)
         self._values: dict[int, _Entry[_V]] = {}
-        self.__doc__ = __doc__ or fget.__doc__
+        self.__doc__ = fget.__doc__
         self.__func__ = fget
 
     @overload
@@ -55,6 +96,14 @@ class OptionalProperty(Generic[_V]):
         self._entry(instance).finalizer()
 
     def is_present(self, obj: object) -> bool:
+        """Check wether the property was set.
+
+        Args:
+            obj: The object to check
+
+        Returns:
+            `True` if the property was set. Otherwise returns `False`
+        """
         return self._entry(obj).value.has_value
 
 
@@ -65,4 +114,12 @@ class _Entry(Generic[_V]):
 
 
 def optionalproperty(func: Callable[[Any], _V]) -> OptionalProperty[_V]:
+    """Alias for [OptionalProperty][optional.OptionalProperty].
+
+    Args:
+        func: The default value supplier.
+
+    Returns:
+        An optional property construct.
+    """
     return OptionalProperty(func)
