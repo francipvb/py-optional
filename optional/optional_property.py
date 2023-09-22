@@ -1,9 +1,12 @@
 from __future__ import annotations
+
 import weakref
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any, Generic, TypeVar, overload
+
 from typing_extensions import Self
+
 from .optional import Optional
 
 _V = TypeVar("_V")
