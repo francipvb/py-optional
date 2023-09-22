@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0a7] - 2023-09-22
+## [1.1.0] - 2023-09-22
 
 ### New features
 
@@ -55,4 +55,5 @@ This is the initial release.
 [1.0a4]: https://github.com/francipvb/py-optional/releases/tag/v1.0a4
 [1.0a5]: https://github.com/francipvb/py-optional/releases/tag/v1.0a5
 [1.0a6]: https://github.com/francipvb/py-optional/releases/tag/v1.0a6
+[1.1.0]: https://github.com/francipvb/py-optional/releases/tag/v1.1.0
 [usage]: USAGE.md
