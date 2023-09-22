@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0a7] - 2023-09-22
+
+### New features
+
+- Added an optional property decorator. See [usage] document for details.
+
 ## [1.0a6] - 2023-04-24
 
 - Changed build documentation step display name.
@@ -45,4 +51,8 @@ This is the initial release.
 [Unreleased]: https://github.com/francipvb/py-optional/compare/v0.0.0...HEAD
 [1.0a1]: https://github.com/francipvb/py-optional/releases/tag/v1.0a1
 [1.0a2]: https://github.com/francipvb/py-optional/releases/tag/v1.0a2
-[1.0a3]: https://github.com/francipvb/py-optional/releases/tag/v1.0a2
+[1.0a3]: https://github.com/francipvb/py-optional/releases/tag/v1.0a3
+[1.0a4]: https://github.com/francipvb/py-optional/releases/tag/v1.0a4
+[1.0a5]: https://github.com/francipvb/py-optional/releases/tag/v1.0a5
+[1.0a6]: https://github.com/francipvb/py-optional/releases/tag/v1.0a6
+[usage]: USAGE.md
