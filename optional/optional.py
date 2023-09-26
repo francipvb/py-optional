@@ -4,16 +4,15 @@ This module has the implementations for the **Optional** object.
 """
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from typing import Any, Awaitable, Callable, Generic, TypeVar, Union, final
-
+import abc
+import typing
 from .exceptions import ValueNotProvidedError
 
-_T = TypeVar("_T")
-_TR = TypeVar("_TR")
+_T = typing.TypeVar("_T")
+_TR = typing.TypeVar("_TR")
 
 
-class Optional(ABC, Generic[_T]):
+class Optional(abc.ABC, typing.Generic[_T]):
     """An optional value wrapper.
 
     An **Optional** object is never constructed directly. Insthead, there are methods to
@@ -26,7 +25,7 @@ class Optional(ABC, Generic[_T]):
     __slots__ = ()
 
     @property
-    @abstractmethod
+    @abc.abstractmethod
     def value(self) -> _T:  # pragma: nocover
         """Get the wrapped value.
 
@@ -39,7 +38,7 @@ class Optional(ABC, Generic[_T]):
         raise NotImplementedError()
 
     @property
-    @abstractmethod
+    @abc.abstractmethod
     def has_value(self) -> bool:  # pragma: nocover
         """Get wether this object has a value in it.
 
@@ -51,7 +50,7 @@ class Optional(ABC, Generic[_T]):
         """
         raise NotImplementedError()
 
-    @final
+    @typing.final
     @property
     def is_empty(self) -> bool:
         """Get wether this instance is empty
@@ -64,7 +63,7 @@ class Optional(ABC, Generic[_T]):
         """
         return not self.has_value
 
-    @final
+    @typing.final
     def or_else(self, value: _T) -> Optional[_T]:
         """Return an optional value wrapping this.
 
@@ -80,8 +79,8 @@ class Optional(ABC, Generic[_T]):
 
         return _Default(value, self)
 
-    @final
-    def map(self, mapper: Callable[[_T], _TR]) -> Optional[_TR]:
+    @typing.final
+    def map(self, mapper: typing.Callable[[_T], _TR]) -> Optional[_TR]:
         """Build a value mapper.
 
         The returned value is another [Optional][optional.Optional] implementation
@@ -108,12 +107,12 @@ class Optional(ABC, Generic[_T]):
         """
         return _Mapped(self, mapper)
 
-    @final
+    @typing.final
     def apply(
         self,
-        func: Callable[[_T], None],
+        func: typing.Callable[[_T], None],
         *,
-        if_empty: Union[Callable[[], None], None] = None,
+        if_empty: typing.Union[typing.Callable[[], None], None] = None,
     ) -> None:
         """Call a function if the value is present.
 
@@ -126,12 +125,14 @@ class Optional(ABC, Generic[_T]):
         elif if_empty is not None:
             if_empty()
 
-    @final
+    @typing.final
     async def apply_async(
         self,
-        func: Callable[[_T], Awaitable[None]],
+        func: typing.Callable[[_T], typing.Awaitable[None]],
         *,
-        if_empty: Union[Callable[[], Awaitable[None]], None] = None,
+        if_empty: typing.Union[
+            typing.Callable[[], typing.Awaitable[None]], None
+        ] = None,
     ) -> None:
         """Call an async function if the value is present.
 
@@ -157,7 +158,7 @@ class Optional(ABC, Generic[_T]):
         return _Value(value)
 
     @staticmethod
-    def empty() -> Optional[Any]:
+    def empty() -> Optional[typing.Any]:
         """Build an empty [Optional][optional.optional.Optional] object.
 
         Returns:
@@ -165,7 +166,7 @@ class Optional(ABC, Generic[_T]):
         """
         return _Empty()
 
-    def __eq__(self, __value: Any) -> bool:
+    def __eq__(self, __value: typing.Any) -> bool:
         if type(__value) != type(self):
             return NotImplemented
 
@@ -180,13 +181,13 @@ class Optional(ABC, Generic[_T]):
         return self.has_value
 
 
-class _Empty(Optional[_T], Generic[_T]):
-    @final
+class _Empty(Optional[_T], typing.Generic[_T]):
+    @typing.final
     @property
     def value(self) -> _T:
         raise ValueNotProvidedError("Value were not provided.")
 
-    @final
+    @typing.final
     @property
     def has_value(self) -> bool:
         return False
@@ -198,7 +199,7 @@ class _Empty(Optional[_T], Generic[_T]):
         return "empty"
 
 
-class _Value(Optional[_T], Generic[_T]):
+class _Value(Optional[_T], typing.Generic[_T]):
     __slots__ = ("_value",)
 
     def __init__(self, value: _T) -> None:
@@ -220,14 +221,16 @@ class _Value(Optional[_T], Generic[_T]):
         return str(self.value)
 
 
-class _Mapped(Optional[_TR], Generic[_T, _TR]):
+class _Mapped(Optional[_TR], typing.Generic[_T, _TR]):
     __slots__ = ("_mapped", "_mapper", "_value", "_value_set")
 
-    def __init__(self, mapped: Optional[_T], mapper: Callable[[_T], _TR]) -> None:
+    def __init__(
+        self, mapped: Optional[_T], mapper: typing.Callable[[_T], _TR]
+    ) -> None:
         self._mapper = mapper
         self._mapped = mapped
         self._value_set = False
-        self._value: Any = None
+        self._value: typing.Any = None
 
     @property
     def has_value(self) -> bool:
@@ -251,7 +254,7 @@ class _Mapped(Optional[_TR], Generic[_T, _TR]):
         return str(self.value)
 
 
-class _Default(Optional[_T], Generic[_T]):
+class _Default(Optional[_T], typing.Generic[_T]):
     def __init__(self, value: _T, mapped: Optional[_T]) -> None:
         self._value = value
         self._mapped = mapped
@@ -272,3 +275,10 @@ class _Default(Optional[_T], Generic[_T]):
 
     def __str__(self) -> str:
         return str(self.value)
+
+
+NullableOptional = typing.Union[Optional[_T], Optional[None]]
+"""A nullable optional.
+
+This is just an alias to `typing.Union[Optional[_T], Optional[None]]`.
+"""
