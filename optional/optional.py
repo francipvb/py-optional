@@ -157,8 +157,8 @@ class Optional(abc.ABC, typing.Generic[_T]):
         """
         return _Value(value)
 
-    @staticmethod
-    def empty() -> Optional[typing.Any]:
+    @classmethod
+    def empty(cls) -> typing.Self:
         """Build an empty [Optional][optional.optional.Optional] object.
 
         Returns:
