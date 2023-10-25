@@ -107,7 +107,18 @@ class OptionalProperty(Generic[_V]):
         Returns:
             `True` if the property was set. Otherwise returns `False`
         """
-        return self._entry(obj).value.has_value
+        return bool(self.raw(obj))
+
+    def raw(self, obj: Any) -> Optional[_V]:
+        """Retrieve the raw optional object.
+
+        Args:
+            obj (Any): Theobject to check
+
+        Returns:
+            The raw optional object powering the property.
+        """
+        return self._entry(obj).value
 
 
 @dataclass()
