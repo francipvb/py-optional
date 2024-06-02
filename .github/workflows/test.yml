@@ -3,6 +3,23 @@ name: Test
 on:
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - optional/
+      - tests/
+      - pyproject.toml
+      - poetry.lock
+      - pytest.ini
+  push:
+    branches:
+      - main
+      - develop
+
+    paths:
+      - optional/
+      - tests/
+      - pyproject.toml
+      - poetry.lock
+      - pytest.ini
 
 jobs:
   run-tests:
