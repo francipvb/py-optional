@@ -2,10 +2,13 @@
 
 This module has the implementations for the **Optional** object.
 """
+
 from __future__ import annotations
 
 import abc
 import typing
+
+import typing_extensions
 
 from .exceptions import ValueNotProvidedError
 
@@ -14,13 +17,10 @@ _TR = typing.TypeVar("_TR")
 
 
 class Optional(abc.ABC, typing.Generic[_T]):
-    """An optional value wrapper.
+    """Represents an optional value.
 
-    An **Optional** object is never constructed directly. Insthead, there are methods to
-    build them.
-
-    See the [of][optional.Optional.of] and
-    [empty][optional.Optional.empty] methods.
+    See the [of][optional.Of] and
+    [empty][optional.Empty] classes.
     """
 
     __slots__ = ()
@@ -60,7 +60,7 @@ class Optional(abc.ABC, typing.Generic[_T]):
         [has_value][optional.optional.Optional.has_value].
 
         Returns:
-            bool: `True` if the value is not present, `False` otherwise
+            `True` if the value is not present, `False` otherwise
         """
         return not self.has_value
 
@@ -147,8 +147,11 @@ class Optional(abc.ABC, typing.Generic[_T]):
             await if_empty()
 
     @staticmethod
-    def of(value: _T) -> Optional[_T]:
+    @typing_extensions.deprecated("Use `optional.Of` class directly.")
+    def of(value: typing.Any) -> Optional[typing.Any]:  # pragma: nocover
         """Build an [Optional][optional.Optional] object.
+
+        This method is deprecated. Use [Of][optional.optional.Of] class directly.
 
         Args:
             value: The value to wrap
@@ -156,19 +159,22 @@ class Optional(abc.ABC, typing.Generic[_T]):
         Returns:
             The [Optional] wrapper.
         """
-        return _Value(value)
+        return Of(value)
 
     @staticmethod
-    def empty() -> Optional[typing.Any]:
+    @typing_extensions.deprecated("Please use `Optional.Empty` directly.")
+    def empty() -> Optional[typing.Any]:  # pragma: nocover
         """Build an empty [Optional][optional.optional.Optional] object.
+
+        This method is deprecated. Use [Empty][optional.optional.Empty] class directly.
 
         Returns:
             An empty optional instance
         """
-        return _Empty()
+        return Empty()
 
     def __eq__(self, __value: typing.Any) -> bool:
-        if type(__value) != type(self):
+        if not isinstance(__value, type(self)):
             return NotImplemented
 
         if self.has_value and __value.has_value:
@@ -182,10 +188,26 @@ class Optional(abc.ABC, typing.Generic[_T]):
         return self.has_value
 
 
-class _Empty(Optional[_T], typing.Generic[_T]):
+class Empty(Optional[typing.Any]):
+    """Represents an optional empty value.
+
+    This is ideal to put in function argument default values as this object does not hold any data and therefore is not mutable.
+
+    Usage example:
+
+    ```python
+    from optional import Optional, Empty, Of
+
+
+    def multiply(optional_value: Optional[int]=Empty(), multiplier: Optional[int]=Empty()) -> int:
+        return optional_value.or_else(2).value * multiplier.or_else(2).value
+
+    ```
+    """
+
     @typing.final
     @property
-    def value(self) -> _T:
+    def value(self) -> typing.Any:
         raise ValueNotProvidedError("Value were not provided.")
 
     @typing.final
@@ -194,16 +216,40 @@ class _Empty(Optional[_T], typing.Generic[_T]):
         return False
 
     def __repr__(self) -> str:
-        return "Optional.empty()"
+        return f"{self.__class__.__name__}()"
 
     def __str__(self) -> str:
         return "empty"
 
 
-class _Value(Optional[_T], typing.Generic[_T]):
+class Of(Optional[_T], typing.Generic[_T]):
+    """An optional value wrapper.
+
+    This is an optional value wrapping a concrete value.
+
+    Example usage:
+    ```python
+    from optional import Optional, Empty, Of
+
+    def update_something(entity_id: int, *, name: Optional[str]=Empty())->bool:
+        if name:
+            print(f"Setting name to {name.value}")
+            return True
+        return False
+
+    update_something(1, name=Of("Karl"))
+    ```
+
+    Note that this is not like the python `None` value. This can hold `None` values too
+
+    Args:
+        value: The value to wrap
+
+    """
+
     __slots__ = ("_value",)
 
-    def __init__(self, value: _T) -> None:
+    def __init__(self, value: _T, /) -> None:
         super().__init__()
         self._value = value
 
@@ -216,7 +262,7 @@ class _Value(Optional[_T], typing.Generic[_T]):
         return True
 
     def __repr__(self) -> str:
-        return f"Optional[{type(self.value).__qualname__}].of({self.value!r})"
+        return f"{type(self).__name__}({self.value!r})"
 
     def __str__(self) -> str:
         return str(self.value)
