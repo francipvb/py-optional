@@ -7,7 +7,7 @@ from typing import Any, Generic, TypeVar, overload
 
 from typing_extensions import Self
 
-from .optional import Optional
+from .optional import Empty, Of, Optional
 
 _V = TypeVar("_V")
 
@@ -81,7 +81,7 @@ class OptionalProperty(Generic[_V]):
         return self
 
     def __set__(self, __instance: Any, __value: _V) -> None:
-        self._entry(__instance).value = Optional.of(__value)
+        self._entry(__instance).value = Of(__value)
 
     def _entry(self, obj: object) -> _Entry[_V]:
         entry = self._values.get(id(obj))
@@ -124,7 +124,7 @@ class OptionalProperty(Generic[_V]):
 @dataclass()
 class _Entry(Generic[_V]):
     finalizer: weakref.finalize
-    value: Optional[_V] = field(default_factory=Optional.empty)
+    value: Optional[_V] = field(default_factory=Empty)
 
 
 def optionalproperty(func: Callable[[Any], _V]) -> OptionalProperty[_V]:
