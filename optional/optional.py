@@ -60,7 +60,7 @@ class Optional(abc.ABC, typing.Generic[_T]):
         [has_value][optional.optional.Optional.has_value].
 
         Returns:
-            bool: `True` if the value is not present, `False` otherwise
+            `True` if the value is not present, `False` otherwise
         """
         return not self.has_value
 
@@ -151,6 +151,8 @@ class Optional(abc.ABC, typing.Generic[_T]):
     def of(value: typing.Any) -> Optional[typing.Any]:  # pragma: nocover
         """Build an [Optional][optional.Optional] object.
 
+        This method is deprecated. Use [Of][optional.optional.Of] class directly.
+
         Args:
             value: The value to wrap
 
@@ -159,10 +161,12 @@ class Optional(abc.ABC, typing.Generic[_T]):
         """
         return Of(value)
 
-    @staticmethod
     @typing_extensions.deprecated("Please use `Optional.Empty` directly.")
+    @staticmethod
     def empty() -> Optional[typing.Any]:  # pragma: nocover
         """Build an empty [Optional][optional.optional.Optional] object.
+
+        This method is deprecated. Use [Empty][optional.optional.Empty] class directly.
 
         Returns:
             An empty optional instance
