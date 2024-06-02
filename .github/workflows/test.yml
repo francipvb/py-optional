@@ -67,3 +67,17 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           parallel-finished: true
+
+  run-lints:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+          cache: "poetry"
+
+      - run: poetry run mypy optional/ tests/
+        name: "Run mypy"
+      - run: poetry run pyright optional/ tests/
+        name: "Run pyright"
