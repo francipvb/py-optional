@@ -36,10 +36,10 @@ poetry install
 
 ```python
 # Import it with an alias
-from optional import Optional as O
+from optional import Optional as O, Of, Empty
 
 # This is the main purpose of the library, so define a function
-def sum_numbers(*, a: O[int] = O.empty(), b: O[int] = O.empty()):
+def sum_numbers(*, a: O[int] = Empty(), b: O[int] = Empty()):
     # Check if the two numbers are empty:
     if a.is_empty and b.is_empty:
         raise ValueError('No numbers were provided.')
@@ -48,9 +48,9 @@ def sum_numbers(*, a: O[int] = O.empty(), b: O[int] = O.empty()):
     return a.or_else(0) + b.or_else(0)
 
 # Sum an int with nothing:
-print(sum_numbers(a=O.of(3), b=O.of(5))) # -> 8
+print(sum_numbers(a=Of(3), b=Of(5))) # -> 8
 ```
 
-Only **Python 3.8+** is supported as required by the black, pydantic packages
+Only **Python 3.8+** is supported.
 
 When you make a release on GitHub, the publish workflow will run and deploy to PyPi! 🚀🎉😎
