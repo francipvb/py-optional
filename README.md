@@ -1,28 +1,7 @@
 # py-optional
 
-<p align="center">
-    <em>Optional value implementation for python.</em>
-</p>
-
-<p align="center">
-<a href="https://github.com/francipvb/py-optional/actions?query=workflow%3ATest" target="_blank">
-    <img src="https://github.com/francipvb/py-optional/workflows/Test/badge.svg" alt="Test">
-</a>
-<a href="https://github.com/francipvb/py-optional/actions?query=workflow%3APublish" target="_blank">
-    <img src="https://github.com/francipvb/py-optional/workflows/Publish/badge.svg" alt="Publish">
-</a>
-<a href="https://dependabot.com/" target="_blank">
-    <img src="https://flat.badgen.net/dependabot/francipvb/py-optional?icon=dependabot" alt="Dependabot Enabled">
-</a>
-<a href="https://codecov.io/gh/francipvb/py-optional" target="_blank">
-    <img src="https://img.shields.io/codecov/c/github/francipvb/py-optional?color=%2334D058" alt="Coverage">
-</a>
-<a href="https://pypi.org/project/py-optional" target="_blank">
-    <img src="https://img.shields.io/pypi/v/py-optional?color=%2334D058&label=pypi%20package" alt="Package version">
-</a>
-<a href="https://pypi.org/project/py-optional/" target="_blank">
-    <img src="https://img.shields.io/pypi/pyversions/py-optional.svg" alt="Python Versions">
-</a>
+[![Coverage Status](https://coveralls.io/repos/github/francipvb/py-optional/badge.svg?branch=develop)](https://coveralls.io/github/francipvb/py-optional?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/francipvb/py-optional/badge.svg?branch=main)](https://coveralls.io/github/francipvb/py-optional?branch=main)
 
 ## Getting started
 
