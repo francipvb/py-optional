@@ -13,19 +13,19 @@ typing-extensions = "^4.5.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.1.1"
-black = "^23.1.0"
+black = "^24.4.2"
 isort = "^5.12.0"
 autoflake = "^2.0.2"
 flake8 = "^6.0.0"
-pre-commit = "^3.2.1"
 pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
 mkdocs = "^1.4.2"
-mkdocs-material = "9.1.6"
+mkdocs-material = "^9.1.6"
 markdown-include = "^0.8.1"
-mkdocstrings = { extras = ["python"], version = "^0.21.2" }
+mkdocstrings = { extras = ["python"], version = "^0.25.0" }
 anyio = "^3.6.2"
 dunamai = "^1.16.0"
+pyright = "^1.1.365"
 
 [build-system]
 requires = ["poetry>=0.12"]
