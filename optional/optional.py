@@ -161,8 +161,8 @@ class Optional(abc.ABC, typing.Generic[_T]):
         """
         return Of(value)
 
-    @typing_extensions.deprecated("Please use `Optional.Empty` directly.")
     @staticmethod
+    @typing_extensions.deprecated("Please use `Optional.Empty` directly.")
     def empty() -> Optional[typing.Any]:  # pragma: nocover
         """Build an empty [Optional][optional.optional.Optional] object.
 
