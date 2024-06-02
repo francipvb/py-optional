@@ -18,12 +18,12 @@ Main purpose for empty values are to be supplied as default function parameter v
 ```python
 from typing import Dict, Any
 
-from optional import Optional as O
+from optional import Optional as O, Empty
 
 def test_function(
     *,
-    value1: O[int] = O.empty(),
-    value2: O[float] = O.empty(),
+    value1: O[int] = Empty(),
+    value2: O[float] = Empty(),
 ) -> Dict[str, Any]:
     data = {}
     if value1.has_value:
@@ -45,32 +45,36 @@ An `Optional` object, if not empty, wraps a value. The value can be anything, in
 For example, if you want to call the function we've defined above, we do something like this:
 
 ```python
-test_func(value1=O.of(2)) # {'value1': 2}
+from Optional import Of
+
+
+test_func(value1=Of(2)) # {'value1': 2}
 ```
 
 ## The `or_else` method
 
-Sometimes you require a value for a function call. For this situation, there is a method called `or_else` in every Optional object.
+Sometimes you need a value to call a function. For this situation there is the [or_else][optional.Optional.or_else] method.
 
-This method returns a new **Optional** object with some differences to the two other values:
+This method returns another [Optional][optional.Optional] object with these differences:
 
 - If the source object has a value, this value is returned.
-- if the source is an empty **Optional**, the `value` property returns the supplied value.
+- if the source is an [optional.Empty][] object, the [value][optional.Optional.value] property returns the supplied value.
+- The [has_value][optional.Optional.has_value] property always returns `True`.
 
 For example:
 
 ```pycon
->>> from optional import Optional as O
->>> O.empty().or_else(45).value
+>>> from optional import Optional as Empty, Of
+>>> Empty().or_else(45).value
 45
->>> O.of(33).or_else(45).value
+>>> Of(33).or_else(45).value
 33
 >>>
 ```
 
 ## The `map` method
 
-Another functionality of the **Optional** objects is the `map` method. Again, this method returns a new **Optional** object with custom behavior:
+Another functionality of the **Optional** objects is the [map][optional.Optional.map] method. Again, this method returns a new **Optional** object with custom behavior:
 
 - The `has_value` and `is_empty` reflects the values of the source **Optional** object.
 - The `value` object runs a function, providing the result of the source `value` property.
@@ -85,14 +89,13 @@ These methods have a similar purpose. The only difference is that the `apply_asy
 
 ## The **optionalproperty** decorator
 
-This decorator returns a **OptionalProperty** object.
+This decorator returns an [OptionalProperty][optional.OptionalProperty] object.
 
-The **OptionalProperty** decorator is a
-descriptor emulating a property with a default
-value. If a value is not set, a callable is
+The [OptionalProperty][optional.OptionalProperty] class is a descriptor emulating a property with a default value. If a value is not set, a callable is
 executed to provide the default value.
 
-The descriptor also has a method to check wether the value is set in a specific object
-instance.
+The descriptor also has a method to check wether the value is set in a specific object instance.
+
+This functionality is powered by the [Optional][optional.Optional] objects.
 
 See the optional property [decorator][optional.optionalproperty] and [class][optional.OptionalProperty] documentation for details.
