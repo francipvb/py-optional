@@ -25,7 +25,6 @@ mkdocs-material = "9.1.6"
 markdown-include = "^0.8.1"
 mkdocstrings = { extras = ["python"], version = "^0.21.2" }
 anyio = "^3.6.2"
-uvloop = "^0.17.0"
 dunamai = "^1.16.0"
 
 [build-system]
