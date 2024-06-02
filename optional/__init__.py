@@ -1,5 +1,5 @@
 from .exceptions import ValueNotProvidedError
-from .optional import Optional, NullableOptional
+from .optional import Empty, NullableOptional, Of, Optional
 from .optional_property import OptionalProperty, optionalproperty
 
 __all__ = (
@@ -8,4 +8,6 @@ __all__ = (
     "OptionalProperty",
     "optionalproperty",
     "NullableOptional",
+    "Of",
+    "Empty",
 )

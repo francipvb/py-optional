@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-06-02
+
+### New features
+
+- Made internal `Empty` and `Of` classes public.
+
+## CI/CD
+
+- Improved testing on CI.
+
+# Internal
+
+- Upgraded dependencies.
+
 ## [1.1.0] - 2023-09-22
 
 ### New features
